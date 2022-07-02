@@ -1,21 +1,28 @@
-name: S3 Deploy
-  # You may pin to the exact commit or the version.
-  # uses: Reggionick/s3-deploy@aa30e453a8a4170856aac178f018c506a80501cf
-  uses: Reggionick/s3-deploy@v3.1.1
-  with:
-    # Directory to deploy
-    folder: /
-    # Name of AWS Bucket
-    bucket: kevins-cloud-resume-bucket
-    # The destination bucket region
-    bucket-region: us-west-1
-    # AWS CloudFront distribution ID
-    dist-id: E2RH0UZ8GILDNV
-    # AWS CloudFront invalidation path(s)
-    invalidation: # optional
-    # Removes files in S3 that are not available in the local copy of the directory
-    delete-removed: # optional
-    # Use this parameter to specify Cache-Control: no-cache, no-store, must-revalidate header
-    no-cache: # optional
-    # Upload files with private ACL, needed for S3 static website hosting
-    private: # optional
+name: Example workflow for S3 Deploy
+on: [push]
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    steps:
+        - uses: actions/checkout@v3
+
+        - name: Install dependencies
+          run: yarn
+
+        - name: Build
+          run: yarn build
+
+        - name: Deploy
+          uses: reggionick/s3-deploy@v3
+          with:
+            folder: build
+            bucket: ${{ secrets.S3_BUCKET }}
+            bucket-region: ${{ secrets.S3_BUCKET_REGION }}
+            dist-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+            invalidation: /
+            delete-removed: true
+            no-cache: true
+            private: true
