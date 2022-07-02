@@ -1,0 +1,21 @@
+- name: S3 Deploy
+  # You may pin to the exact commit or the version.
+  # uses: Reggionick/s3-deploy@aa30e453a8a4170856aac178f018c506a80501cf
+  uses: Reggionick/s3-deploy@v3.1.1
+  with:
+    # Directory to deploy
+    folder: /
+    # Name of AWS Bucket
+    bucket: kevins-cloud-resume-bucket
+    # The destination bucket region
+    bucket-region: us-west-1
+    # AWS CloudFront distribution ID
+    dist-id: E2RH0UZ8GILDNV
+    # AWS CloudFront invalidation path(s)
+    invalidation: # optional
+    # Removes files in S3 that are not available in the local copy of the directory
+    delete-removed: # optional
+    # Use this parameter to specify Cache-Control: no-cache, no-store, must-revalidate header
+    no-cache: # optional
+    # Upload files with private ACL, needed for S3 static website hosting
+    private: # optional
