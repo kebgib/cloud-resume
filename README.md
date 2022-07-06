@@ -3,4 +3,4 @@ My cloud resume, hosted on aws S3 with a cloudfront distribution, written in HTM
 
 Utilizing github actions to push this repo to an AWS s3 static site!
 
-take a look!
+take a look?
